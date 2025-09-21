@@ -1,17 +1,16 @@
-FROM debian:10-slim
+FROM debian:13-slim
 
-ENV NETIO_ZIP=http://www.ars.de/netio133.zip
 ENV NETIO_SHA512=79a4d8ad5a5d9750a19bf7f8f4cc762e6d1a866a63138bfc1cf8614057eb8ade147817e489f93210990ce9d82be03a5053821663212fbee71c4cd46c2f9c9232
 
-RUN set -eux; \
+RUN --mount=type=bind,source=netio133.zip,target=/netio133.zip \
+    set -eux; \
     apt-get update; \
-    apt-get install -y --no-install-recommends wget unzip; \
+    apt-get install -y --no-install-recommends unzip; \
     rm -rf /var/lib/apt/lists/*; \
     echo "$NETIO_SHA512  netio133.zip" >netio133.zip.sha512; \
-    wget "$NETIO_ZIP" -O netio133.zip; \
     sha512sum -c netio133.zip.sha512; \
     unzip -j netio133.zip bin/linux-amd64 -d /bin; \
-    rm netio*; \
+    rm netio*sha512; \
     mv /bin/linux-amd64 /bin/netio; \
     chmod +x /bin/netio; \
     # Verify it runs. This command doesn't actually do

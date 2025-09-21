@@ -10,7 +10,7 @@ the binary can be used "directly". Put this in `.bashrc` or
 just write it in your terminal for one-shot use:
 
 ```bash
-alias netio="docker run --rm -it --network host henrist/netio"
+alias netio="docker run --rm -it --network host ghcr.io/henrist/netio"
 ```
 
 Now `netio` can be used as if it is installed locally.
